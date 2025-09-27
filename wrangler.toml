@@ -1,0 +1,35 @@
+name = "cloudflare-docker-proxy1111"
+compatibility_date = "2023-12-01"
+
+[dev]
+ip = "0.0.0.0"
+port = 8787
+local_protocol = "http"
+
+[env.dev.vars]
+MODE = "debug"
+TARGET_UPSTREAM = "https://registry-1.docker.io"
+
+[env.production]
+name = "cloudflare-docker-proxy"
+routes = [
+  { pattern = "docker.closeai.me", custom_domain = true },
+  { pattern = "quay.closeai.me", custom_domain = true },
+  { pattern = "gcr.closeai.me", custom_domain = true },
+  { pattern = "k8s-gcr.closeai.me", custom_domain = true },
+  { pattern = "k8s.closeai.me", custom_domain = true },
+  { pattern = "ghcr.closeai.me", custom_domain = true },
+  { pattern = "cloudsmith.closeai.me", custom_domain = true },
+]
+
+[env.production.vars]
+MODE = "production"
+TARGET_UPSTREAM = ""
+
+[env.staging]
+name = "cloudflare-docker-proxy-staging"
+route = { pattern = "docker-staging.closeai.me", custom_domain = true }
+
+[env.staging.vars]
+MODE = "staging"
+TARGET_UPSTREAM = ""
